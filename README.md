@@ -8,7 +8,7 @@ Example of a microservice written in Python, with the [Flask](http://flask.pocoo
 Execute the microservice container with the following command :
 
 ```
-docker run -ti -p 8080:80 msagency/msa-json-patch
+docker run -ti -p 9909:80 msagency/msa-json-patch
 ```
 
 ## Endpoints
