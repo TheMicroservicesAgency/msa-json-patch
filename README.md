@@ -13,6 +13,24 @@ Execute the microservice container with the following command :
 
     docker run -ti -p 9909:80 msagency/msa-json-patch
 
+## Example(s)
+
+
+    $ curl -X POST "http://localhost:9909/json/diff" -H "Content-Type: application/json" \
+    -d '[{"name": "test","val": 10}, {"name": "test","val": 20}]'
+    {
+      "data": "[{\"op\": \"replace\", \"value\": 20, \"path\": \"/val\"}]"
+    }
+
+    $ curl -X POST "http://localhost:9909/json/patch" -H "Content-Type: application/json" \
+    -d '[{"name": "test","val": 10}, [{ "op": "replace","path": "/val", "value": 20}]]'
+    {
+      "data": {
+        "name": "test",
+        "val": 20
+      }
+    }
+
 ## Endpoints
 
 - POST [/json/diff]() : Returns a diff between two JSON documents A and B. Expected input is [A,B]
