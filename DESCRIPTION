@@ -1,1 +1,1 @@
-Microservice to generate a diff (rfc 6902) between two json documents A & B, that can be also used to transform/patch document A into document B.
+Microservice to generate a diff (rfc 6902) between two json documents A & B
