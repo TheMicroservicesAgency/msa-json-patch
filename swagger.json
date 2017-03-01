@@ -1,18 +1,186 @@
 {
     "swagger": "2.0",
     "info": {
-        "version": "1.0.0",
-        "title": "msa-json-patch",
-        "description": "An exmple of a simple Python microservice"
+        "title": "MSA-JSON-PATCH",
+        "description": "Diffing and patching (rfc 6902) for JSON documents",
+        "version": "1.0.0"
     },
+    "produces": [
+        "application/json"
+    ],
     "paths": {
-        "/hello-world": {
+        "/ms/version": {
             "get": {
-                "description": "Returns \"Hello world\"\n",
+                "tags": [
+                    "msa-standard"
+                ],
+                "summary": "Return the microservice version number",
                 "responses": {
                     "200": {
-                        "description": "Successful response"
+                        "description": "the version number"
                     }
+                }
+            }
+        },
+        "/ms/name": {
+            "get": {
+                "tags": [
+                    "msa-standard"
+                ],
+                "summary": "Return the microservice name",
+                "responses": {
+                    "200": {
+                        "description": "the name"
+                    }
+                }
+            }
+        },
+        "/ms/readme.md": {
+            "get": {
+                "tags": [
+                    "msa-standard"
+                ],
+                "summary": "Return the microservice readme in markdown",
+                "responses": {
+                    "200": {
+                        "description": "the readme in markdown"
+                    }
+                }
+            }
+        },
+        "/ms/readme.html": {
+            "get": {
+                "tags": [
+                    "msa-standard"
+                ],
+                "summary": "Return the microservice readme in html",
+                "responses": {
+                    "200": {
+                        "description": "the readme in html"
+                    }
+                }
+            }
+        },
+        "/swagger/swagger.json": {
+            "get": {
+                "tags": [
+                    "msa-standard"
+                ],
+                "summary": "Return the microservice Swagger JSON file",
+                "responses": {
+                    "200": {
+                        "description": "the Swagger JSON file"
+                    }
+                }
+            }
+        },
+        "/swagger/#": {
+            "get": {
+                "tags": [
+                    "msa-standard"
+                ],
+                "summary": "Return the Swagger-UI page",
+                "responses": {
+                    "200": {
+                        "description": "the Swagger-UI page"
+                    }
+                }
+            }
+        },
+        "/nginx/stats.json": {
+            "get": {
+                "tags": [
+                    "msa-standard"
+                ],
+                "summary": "Return stats about Nginx in JSON",
+                "responses": {
+                    "200": {
+                        "description": "the stats about Nginx in JSON"
+                    }
+                }
+            }
+        },
+        "/nginx/stats.html": {
+            "get": {
+                "tags": [
+                    "msa-standard"
+                ],
+                "summary": "Return a dashboard displaying the stats from Nginx",
+                "responses": {
+                    "200": {
+                        "description": "the Nginx stats dashboard"
+                    }
+                }
+            }
+        },
+        "/json/diff": {
+            "post": {
+                "tags": [
+                    "msa-json-patch"
+                ],
+                "summary": "Generate a patch to transform JSON doc A into JSON doc B",
+                "parameters": [
+                    {
+                        "name": "JSON doc A, JSON doc B",
+                        "in": "body",
+                        "description": "An array with two JSON documents",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/Input"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "the generated JSON patch",
+                        "schema": {
+                            "$ref": "#/definitions/Result"
+                        }
+                    }
+                }
+            }
+        },
+        "/json/patch": {
+            "post": {
+                "tags": [
+                    "msa-json-patch"
+                ],
+                "summary": "Apply a given patch to a given JSON doc",
+                "parameters": [
+                    {
+                        "name": "JSON doc, patch",
+                        "in": "body",
+                        "description": "An array containing a JSON document and a JSON patch",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/Input"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "the patched JSON document",
+                        "schema": {
+                            "$ref": "#/definitions/Result"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "Input": {
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
+        },
+        "Result": {
+            "type": "object",
+            "properties": {
+                "data": {
+                    "description": "the resulting JSON patch",
+                    "type": "string"
                 }
             }
         }
