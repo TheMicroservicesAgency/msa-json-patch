@@ -1,2 +1,2 @@
-Flask
-jsonpatch
+Flask==0.11.1
+jsonpatch==1.15
